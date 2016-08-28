@@ -7,7 +7,4 @@ block content
         h1= title
     .row
       .col-md-6.col-sm-12
-        p
-          | Loc8r was created to help people find places to sit down and get a bit of work done.
-          | <br/><br/>
-          | You’ll probably want to add some additional lines in there, so that the page looks like it has real content. Notice that the lines starting with the pipe character (|) can contain HTML tags if you want them to. Figure 4.13 shows how this might look in the browser with a bit more content in it.
+        p!= content.replace(/\n/g, '<br/>')
