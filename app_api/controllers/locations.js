@@ -43,12 +43,13 @@ var makeLoactionsList = function(locationsInfo) {
 module.exports.locationsListByDistance = function(req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
-  var dist = parseFloat(req.query.dist);
+  var maxDistance = parseFloat(req.query.maxDistance);
 
-  if(!lng || !lat || !dist) {
+  if((!lng && lng !== 0) || (!lat && lat !== 0) || (!maxDistance && maxDistance > 0)) {
     sendJsonResponse(res, 404, {
-      "message": "lng, lat, and dist query parameters are required"
+      "message": "lng, lat, and maxDistance query parameters are required and maxDistance must bigger than 1"
     });
+    return;
   }
 
   var point = {
@@ -57,7 +58,7 @@ module.exports.locationsListByDistance = function(req, res) {
   };
   var geoOptions = {
     spherical: true,
-    maxDistance: dist,
+    maxDistance: maxDistance,
     num: 10
   };
   Loc.geoNear(point, geoOptions, function(err, results, stats) {
