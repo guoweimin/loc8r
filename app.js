@@ -11,15 +11,12 @@ var passport = require('passport');
 
 require('./app_api/models/db');
 require('./app_api/config/passport');
-
-var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
-// var users = require('./app_server/routes/users');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'app_server', 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Uglify the javascript files as early as possible
@@ -63,7 +60,6 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 
 app.use(passport.initialize());
 
-// app.use('/', routes);
 app.use('/api', routesApi);
 // app.use('/users', users);
 
@@ -110,6 +106,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
